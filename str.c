@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int myStrLen(char * s) {
-  unsigned int retInt = 0;
+int mystrlen(char * s) {
+  int retInt = 0;
 
   while (*s++) {
     retInt++;
@@ -12,9 +12,15 @@ int myStrLen(char * s) {
 }
 
 int main() {
-  char * s1 = "hello";
-
-  printf( "%d\n" , myStrLen(s1) );
+  char * s0   = "hello";
+  char s1[10] = "goodbye";
   
+  printf("Testing strlen():\n");
+  printf("[standard]: %lu\n", strlen(s0));
+  printf("[mine]: %d\n\n", mystrlen(s0));
+
+  printf("[standard]: %lu\n", strlen(s1));
+  printf("[mine]: %d\n\n", mystrlen(s1));
+
   return 0;
 }
