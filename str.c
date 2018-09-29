@@ -33,14 +33,16 @@ char * mystrncat ( char * dest, char * src , int n ) {
 }
 
 int mystrcmp ( char * s0, char * s1 ) {
-  
-  if ( *s0 < *s1 )
-    return -1;
-  else if ( *s0 > *s1 )
-    return 1;
-  else {
-    s0++;
-    s1++;
+
+  while ( *s0 || *s1 ) {  // both chars are not NUL
+    if ( *s0 < *s1 )
+      return -1;
+    else if ( *s0 > *s1 )
+      return 1;
+    else {
+      s0++;
+      s1++;
+    }
   }
 
   return 0;
@@ -50,6 +52,7 @@ int main() {
   char s0[32] = "hello";
   char s1[32] = "goodbye";
   char s2[32] = "test";
+  char s3[32] = "hell";
 
   printf("Testing strlen():\n");
   printf("\t[standard]: %lu\n", strlen(s0));
@@ -84,6 +87,9 @@ int main() {
   
   printf("\t[standard]: %d\n", strcmp(s0,s0) );
   printf("\t[mine]: %d\n\n", mystrcmp(s0,s0) );
+  
+  printf("\t[standard]: %d\n", strcmp(s3,s0) );
+  printf("\t[mine]: %d\n\n", mystrcmp(s3,s0) );
 
   
   return 0;
