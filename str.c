@@ -32,6 +32,20 @@ char * mystrncat ( char * dest, char * src , int n ) {
   return dest;
 }
 
+int mystrcmp ( char * s0, char * s1 ) {
+  
+  if ( *s0 < *s1 )
+    return -1;
+  else if ( *s0 > *s1 )
+    return 1;
+  else {
+    s0++;
+    s1++;
+  }
+
+  return 0;
+}
+
 int main() {
   char s0[32] = "hello";
   char s1[32] = "goodbye";
@@ -46,20 +60,30 @@ int main() {
 
   printf("Testing strcpy():\n");
   printf("\t[standard]: %s\n", strcpy(s2,s1) );
-  strcpy(s2, "test");  // reset
+  strcpy(s2, "test");   // reset
   printf("\t[mine]: %s\n\n", mystrcpy(s2,s1) );
-  strcpy(s2, "test");  // reset
+  strcpy(s2, "test");   // reset
   
   printf("Testing strncat():\n");
   printf("\t[standard]: %s\n", strncat(s0,s1,7) );
   strcpy(s0, "hello");  // reset
   printf("\t[mine]: %s\n", mystrncat(s0,s1,7) );
-  strcpy(s0, "hello"); // reset
+  strcpy(s0, "hello");  // reset
 
   printf("\t[standard]: %s\n", strncat(s0,s1,3) );
   strcpy(s0, "hello");  // reset
-  printf("\t[mine]: %s\n", mystrncat(s0,s1,3) );
-  strcpy(s0, "hello"); // reset
+  printf("\t[mine]: %s\n\n", mystrncat(s0,s1,3) );
+  strcpy(s0, "hello");  // reset
+
+  printf("Testing strcmp():\n");
+  printf("\t[standard]: %d\n", strcmp(s0,s2) );
+  printf("\t[mine]: %d\n\n", mystrcmp(s0,s2) );
+  
+  printf("\t[standard]: %d\n", strcmp(s0,s1) );
+  printf("\t[mine]: %d\n\n", mystrcmp(s0,s1) );
+  
+  printf("\t[standard]: %d\n", strcmp(s0,s0) );
+  printf("\t[mine]: %d\n\n", mystrcmp(s0,s0) );
 
   
   return 0;
