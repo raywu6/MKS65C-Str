@@ -1,46 +1,66 @@
 #include <stdio.h>
 #include <string.h>
 
-int mystrlen(char * s) {
+int mystrlen(char * str) {
   int retInt = 0;
 
-  while (*s++) {
+  while (*str++) {
     retInt++;
   }
   
   return retInt;
 }
 
-char * mystrcpy ( char * s1, char * s2){
+char * mystrcpy ( char * dest, char * src) {
   int i = 0;
-  int len = mystrlen(s2);
+  int len = mystrlen(src);
   for(; i < len; i++){
-    s1[i] = s2[i];
+    dest[i] = src[i];
   }
-  return s1;
+  return dest;
+}
+
+char * mystrncat ( char * dest, char * src , int n ) {
+  int dest_orig_length = mystrlen(dest);
+  int  src_orig_length = mystrlen(src);
+  
+  int i;
+  for ( i=0 ; i<n ; i++ ) {
+    dest[ dest_orig_length + i ] = src[i];
+  }
+  
+  return dest;
 }
 
 int main() {
-  char s0[10] = "hello";
-  char s1[10] = "goodbye";
-  char s2[10] = "test";
+  char s0[32] = "hello";
+  char s1[32] = "goodbye";
+  char s2[32] = "test";
 
-  printf("s0 = %s\n", s0);
-  printf("s1 = %s\n\n", s1);
-  
   printf("Testing strlen():\n");
-  printf("[standard]: %lu\n", strlen(s0));
-  printf("[mine]: %d\n\n", mystrlen(s0));
+  printf("\t[standard]: %lu\n", strlen(s0));
+  printf("\t[mine]: %d\n\n", mystrlen(s0));
 
-  printf("[standard]: %lu\n", strlen(s1));
-  printf("[mine]: %d\n\n", mystrlen(s1));
-
-  printf("s2 = %s\n\n", s2);
+  printf("\t[standard]: %lu\n", strlen(s1));
+  printf("\t[mine]: %d\n\n", mystrlen(s1));
 
   printf("Testing strcpy():\n");
-  printf("[standard]: %s\n", strcpy(s2, s1));
-  printf("[reset]: %s\n", strcpy(s2, "test"));
-  printf("[mine]: %s\n", strcpy(s2, s1));
+  printf("\t[standard]: %s\n", strcpy(s2,s1) );
+  strcpy(s2, "test");  // reset
+  printf("\t[mine]: %s\n\n", mystrcpy(s2,s1) );
+  strcpy(s2, "test");  // reset
+  
+  printf("Testing strncat():\n");
+  printf("\t[standard]: %s\n", strncat(s0,s1,7) );
+  strcpy(s0, "hello");  // reset
+  printf("\t[mine]: %s\n", mystrncat(s0,s1,7) );
+  strcpy(s0, "hello"); // reset
 
+  printf("\t[standard]: %s\n", strncat(s0,s1,3) );
+  strcpy(s0, "hello");  // reset
+  printf("\t[mine]: %s\n", mystrncat(s0,s1,3) );
+  strcpy(s0, "hello"); // reset
+
+  
   return 0;
 }
