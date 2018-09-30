@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+// returns the length of a string (w/o \0)
 int mystrlen(char * str) {
   int retInt = 0;
 
@@ -11,6 +12,8 @@ int mystrlen(char * str) {
   return retInt;
 }
 
+// copies source string into the destination string
+// returns the char pointer to destination str
 char * mystrcpy ( char * dest, char * src) {
   int i = 0;
   int len = mystrlen(src);
@@ -20,6 +23,8 @@ char * mystrcpy ( char * dest, char * src) {
   return dest;
 }
 
+// concatenates n characters from source str to dest str
+// returns the char pointer to destination str
 char * mystrncat ( char * dest, char * src , int n ) {
   int dest_orig_length = mystrlen(dest);
   int  src_orig_length = mystrlen(src);
@@ -32,6 +37,10 @@ char * mystrncat ( char * dest, char * src , int n ) {
   return dest;
 }
 
+// compares two strings
+// returns -1 (negative) if s0 < s1,
+//          0            if s0 = s1,
+//          1 (positive) if s0 > s1
 int mystrcmp ( char * s0, char * s1 ) {
 
   while ( *s0 || *s1 ) {  // both chars are not NUL
@@ -49,11 +58,13 @@ int mystrcmp ( char * s0, char * s1 ) {
   return 0;
 }
 
+// returns char pointer to first occurrence of specified character in string,
+//         if not found, return NULL
 char * mystrchr ( char * s , int character ) {
   int size = strlen(s);
-  
+
   int i; 
-  for ( i=0 ; i<=size ; i++ ) {  // allow to check for ending \0
+  for ( i=0 ; i<=size ; i++ ) {     // allow to check for ending \0
     if ( (int) *s == character ) {  // are ascii equal?
       return s;
     }
@@ -64,6 +75,8 @@ char * mystrchr ( char * s , int character ) {
   return NULL;
 }
 
+// returns char pointer to first character of specified str in str,
+//         if specified str is not found, return NULL
 char * mystrstr ( char * str , char * substr ) {
   int size = strlen(str);
   char * firstCharInSubstr = substr;
@@ -108,11 +121,20 @@ int main() {
   printf("\t[standard]: %lu\n", strlen(s1));
   printf("\t[mine]: %d\n\n", mystrlen(s1));
 
+  // ========== LINE OF DEMARCATION ==========
+
   printf("Testing strcpy():\n");
   printf("\t[standard]: %s\n", strcpy(s2,s1) );
   strcpy(s2, "test");   // reset
   printf("\t[mine]: %s\n\n", mystrcpy(s2,s1) );
   strcpy(s2, "test");   // reset
+  
+  printf("\t[standard]: %s\n", strcpy(s1,s2) );
+  strcpy(s2, "test");   // reset
+  printf("\t[mine]: %s\n\n", mystrcpy(s1,s2) );
+  strcpy(s2, "test");   // reset
+
+  // ========== LINE OF DEMARCATION ==========
   
   printf("Testing strncat():\n");
   printf("\t[standard]: %s\n", strncat(s0,s1,7) );
@@ -138,15 +160,14 @@ int main() {
   printf("\t[standard]: %d\n", strcmp(s3,s0) );
   printf("\t[mine]: %d\n\n", mystrcmp(s3,s0) );
 
+  // ========== LINE OF DEMARCATION ==========
+  
   printf("Testing strchr():\n");
   printf("\t[standard]: %s\n", strchr(s0,0) );
   printf("\t[mine]: %s\n\n", mystrchr(s0,0) );
 
   printf("\t[standard]: %s\n", strchr(s0,'0') );
   printf("\t[mine]: %s\n\n", mystrchr(s0,'0') );
-  
-  printf("\t[standard]: %s\n", strchr(s1,'h') );
-  printf("\t[mine]: %s\n\n", mystrchr(s1,'h') );
 
   printf("\t[standard]: %s\n", strchr(s1,'g') );
   printf("\t[mine]: %s\n\n", mystrchr(s1,'g') );
@@ -154,9 +175,8 @@ int main() {
   printf("\t[standard]: %s\n", strchr(s2,'t') );
   printf("\t[mine]: %s\n\n", mystrchr(s2,'t') );
 
-  printf("\t[standard]: %s\n", strchr(s1,'0') );
-  printf("\t[mine]: %s\n\n", mystrchr(s1,'0') );
-
+  // ========== LINE OF DEMARCATION ==========
+  
   printf("Testing strstr():\n");
   printf("\t[standard]: %s\n", strstr(s0,s3) );
   printf("\t[mine]: %s\n\n", mystrstr(s0,s3) );
