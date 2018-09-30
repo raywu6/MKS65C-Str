@@ -48,6 +48,22 @@ int mystrcmp ( char * s0, char * s1 ) {
   return 0;
 }
 
+char * mystrchr ( char * s , int character ) {
+  int size = strlen(s);
+  
+  int i; 
+  for ( i=0 ; i<=size ; i++ ) {
+    if ( (int) *s == character ) {  // are ascii equal?
+      return s;
+    }
+    else
+      s++;
+  }
+
+  return NULL;
+  
+}
+
 int main() {
   char s0[32] = "hello";
   char s1[32] = "goodbye";
@@ -91,6 +107,25 @@ int main() {
   printf("\t[standard]: %d\n", strcmp(s3,s0) );
   printf("\t[mine]: %d\n\n", mystrcmp(s3,s0) );
 
+  printf("Testing strchr():\n");
+  printf("\t[standard]: %s\n", strchr(s0,0) );
+  printf("\t[mine]: %s\n\n", mystrchr(s0,0) );
+
+  printf("\t[standard]: %s\n", strchr(s0,'0') );
+  printf("\t[mine]: %s\n\n", mystrchr(s0,'0') );
+  
+  printf("\t[standard]: %s\n", strchr(s1,'h') );
+  printf("\t[mine]: %s\n\n", mystrchr(s1,'h') );
+
+  printf("\t[standard]: %s\n", strchr(s1,'g') );
+  printf("\t[mine]: %s\n\n", mystrchr(s1,'g') );
+
+  printf("\t[standard]: %s\n", strchr(s2,'t') );
+  printf("\t[mine]: %s\n\n", mystrchr(s2,'t') );
+
+  printf("\t[standard]: %s\n", strchr(s1,'0') );
+  printf("\t[mine]: %s\n\n", mystrchr(s1,'0') );
   
   return 0;
 }
+
