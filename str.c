@@ -35,9 +35,10 @@ char * mystrncat ( char * dest, char * src , int n ) {
 int mystrcmp ( char * s0, char * s1 ) {
 
   while ( *s0 || *s1 ) {  // both chars are not NUL
-    if ( *s0 < *s1 )
+    
+    if ( (int)*s0 < (int)*s1 )      // compare ascii
       return -1;
-    else if ( *s0 > *s1 )
+    else if ( (int)*s0 > (int)*s1 ) // compare ascii
       return 1;
     else {
       s0++;
@@ -52,7 +53,7 @@ char * mystrchr ( char * s , int character ) {
   int size = strlen(s);
   
   int i; 
-  for ( i=0 ; i<=size ; i++ ) {
+  for ( i=0 ; i<=size ; i++ ) {  // allow to check for ending \0
     if ( (int) *s == character ) {  // are ascii equal?
       return s;
     }
@@ -61,7 +62,40 @@ char * mystrchr ( char * s , int character ) {
   }
 
   return NULL;
-  
+}
+
+char * mystrstr ( char * str , char * substr ) {
+  int size = strlen(str);
+  char * firstCharInSubstr = substr;
+  char * retCharPointer = NULL;  // default
+
+  int i;
+  for ( i=0 ; i<size ; i++ ) {
+
+    printf("\nstr:%s       substr: %s\n",str,substr);
+    // should be strcmp(*str,*substr) but
+    // warning: incompatible integer to pointer conversion passing 'char' to parameter of type 'const char *'; remove *
+    
+    if ( strcmp(str,substr) == 0 ) {
+      if ( strcmp(*str,*firstCharInSubstr) == 0 ) {
+	retCharPointer = str;
+      }
+      str++;
+      substr++;
+    }
+    
+    else if ( !*substr ) {
+      return retCharPointer;  // exhausted substr (found)
+    }
+    
+    else {
+      str++;
+      retCharPointer = NULL;  // reset return val
+    }
+    
+  }
+
+  return retCharPointer;
 }
 
 int main() {
@@ -125,6 +159,11 @@ int main() {
 
   printf("\t[standard]: %s\n", strchr(s1,'0') );
   printf("\t[mine]: %s\n\n", mystrchr(s1,'0') );
+
+  printf("Testing strstr():\n");
+  printf("\t[standard]: %s\n", strstr(s0,s3) );
+  printf("\t[mine]: %s\n\n", mystrstr(s0,s3) );
+
   
   return 0;
 }
