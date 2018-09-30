@@ -70,21 +70,18 @@ char * mystrstr ( char * str , char * substr ) {
   char * retCharPointer = NULL;  // default
 
   int i;
-  for ( i=0 ; i<size ; i++ ) {
+  for ( i=0 ; i<=size ; i++ ) { // allow to check for ending \0
+                                // will account for different len strs
 
-    printf("\nstr:%s       substr: %s\n",str,substr);
-    // should be strcmp(*str,*substr) but
-    // warning: incompatible integer to pointer conversion passing 'char' to parameter of type 'const char *'; remove *
-    
-    if ( strcmp(str,substr) == 0 ) {
-      if ( strcmp(*str,*firstCharInSubstr) == 0 ) {
+    if ( *str == *substr ) { // if current corresponding chars ==
+      if ( *str == *firstCharInSubstr ) {  // prepare...
 	retCharPointer = str;
       }
       str++;
       substr++;
     }
     
-    else if ( !*substr ) {
+    else if ( !*substr ) {    // if reached \0 in substr
       return retCharPointer;  // exhausted substr (found)
     }
     
@@ -93,13 +90,13 @@ char * mystrstr ( char * str , char * substr ) {
       retCharPointer = NULL;  // reset return val
     }
     
-  }
+  } // end for-loop
 
   return retCharPointer;
 }
 
 int main() {
-  char s0[32] = "hello";
+  char s0[32] = "hellow";
   char s1[32] = "goodbye";
   char s2[32] = "test";
   char s3[32] = "hell";
@@ -119,14 +116,14 @@ int main() {
   
   printf("Testing strncat():\n");
   printf("\t[standard]: %s\n", strncat(s0,s1,7) );
-  strcpy(s0, "hello");  // reset
+  strcpy(s0, "hellow");  // reset
   printf("\t[mine]: %s\n", mystrncat(s0,s1,7) );
-  strcpy(s0, "hello");  // reset
+  strcpy(s0, "hellow");  // reset
 
   printf("\t[standard]: %s\n", strncat(s0,s1,3) );
-  strcpy(s0, "hello");  // reset
+  strcpy(s0, "hellow");  // reset
   printf("\t[mine]: %s\n\n", mystrncat(s0,s1,3) );
-  strcpy(s0, "hello");  // reset
+  strcpy(s0, "hellow");  // reset
 
   printf("Testing strcmp():\n");
   printf("\t[standard]: %d\n", strcmp(s0,s2) );
@@ -164,6 +161,14 @@ int main() {
   printf("\t[standard]: %s\n", strstr(s0,s3) );
   printf("\t[mine]: %s\n\n", mystrstr(s0,s3) );
 
+  printf("\t[standard]: %s\n", strstr(s3,s0) );
+  printf("\t[mine]: %s\n\n", mystrstr(s3,s0) );
+
+  printf("\t[standard]: %s\n", strstr(s0,s0) );
+  printf("\t[mine]: %s\n\n", mystrstr(s0,s0) );
+
+  printf("\t[standard]: %s\n", strstr(s3,s2) );
+  printf("\t[mine]: %s\n\n", mystrstr(s3,s2) );
   
   return 0;
 }
