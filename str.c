@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
+// Raymond Wu, Bill Ni
+// Systems pd10
+// MKS65C-Str
+// 2018-10-01
+
 // returns the length of a string (w/o \0)
 int mystrlen(char * str) {
   int retInt = 0;
